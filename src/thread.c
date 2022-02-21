@@ -1,21 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philosopher.h                                      :+:      :+:    :+:   */
+/*   thread.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: noguen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/15 15:55:25 by noguen            #+#    #+#             */
-/*   Updated: 2022/02/15 16:07:41 by noguen           ###   ########.fr       */
+/*   Created: 2022/02/21 14:58:56 by noguen            #+#    #+#             */
+/*   Updated: 2022/02/21 15:01:32 by noguen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILOSOPHER_H
-# define PHILOSOPHER_H
+#include "../include/philosophers.h"
 
-# include <pthread.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <sys/time.h>
+int	thread_start(t_all *all)
+{
 
-
+}
