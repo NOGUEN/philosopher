@@ -6,7 +6,7 @@
 /*   By: noguen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 16:55:07 by noguen            #+#    #+#             */
-/*   Updated: 2022/02/21 14:42:53 by noguen           ###   ########.fr       */
+/*   Updated: 2022/02/21 19:15:32 by noguen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,25 @@
 
 void	error_exit(int code)
 {
-	if (code == 0)
-		write(1, "\033[31mInvalid number of parameters.\n\033[0m",
-			utils_strlen("\033[31mInvalid number of parameters.\n\033[0m"));
-	else if (code == -1)
-		write(1, "\033[31mParameter is not number.\n\033[0m",
-			utils_strlen("\033[31mParameter is not number.\n\033[0m"));
-	else if (code == -2)
-		write(1, "\033[31mParameter is negative number.\n\033[0m",
-			utils_strlen("\033[31mParameter is negative number.\n\033[0m"));
-	else if (code == -3)
-		write(1, "\033[31mMutex init error.\n\033[0m",
-			utils_strlen("\033[31mMutex init error.\n\033[0m"));
-	else if (code == -4)
-		write(1, "\033[31mMalloc error.\n\033[0m",
-			utils_strlen("\033[31mMalloc error.\n\033[0m"));
-	else if (code == -5)
-		write(1, "\033[31mWrong philosopher number.\n\033[0m",
-			utils_strlen("\033[31mWrong philosopher number.\n\033[0m"));
-	else if (code == -6)
-		;
-
+	if (code <= 0 && code >= -6)
+		error_exit1(code);
 	exit(0);
+}
+
+void	error_exit1(int code)
+{
+	if (code == 0)
+		print_error("Invalid number of parameters.");
+	else if (code == -1)
+		print_error("Parameter is not number.");
+	else if (code == -2)
+		print_error("Parameter is negative number.");
+	else if (code == -3)
+		print_error("Mutex init error.");
+	else if (code == -4)
+		print_error("Malloc error.");
+	else if (code == -5)
+		print_error("Wrong philosopher number.");
+	else if (code == -6)
+		print_error("pthread_create error.");
 }

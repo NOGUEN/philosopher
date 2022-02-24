@@ -6,7 +6,7 @@
 /*   By: noguen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 22:14:59 by noguen            #+#    #+#             */
-/*   Updated: 2022/02/19 16:10:04 by noguen           ###   ########.fr       */
+/*   Updated: 2022/02/21 19:05:58 by noguen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	utils_isnum(char *str)
 	return (1);
 }
 
-void	utils_putnbr(int num)
+void	utils_putnbr(long long num)
 {
 	char	c;
 

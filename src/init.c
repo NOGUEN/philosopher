@@ -6,7 +6,7 @@
 /*   By: noguen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:07:19 by noguen            #+#    #+#             */
-/*   Updated: 2022/02/20 14:18:06 by noguen           ###   ########.fr       */
+/*   Updated: 2022/02/24 14:08:20 by noguen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	init_mutex(t_all *all)
 			error_exit(-4);
 	if (pthread_mutex_init(&(all->eating), NULL))
 		error_exit(-3);
-	if (pthread_mutex_init(&(all->writing), NULL))
+	if (pthread_mutex_init(&(all->printing), NULL))
 		error_exit(-3);
 }
 
@@ -56,7 +56,7 @@ void	init_all(t_all *all, int argc, char *argv[])
 	all->time_to_sleep = check_number(argv[4]);
 	all->death_flag = 0;
 	all->eat_flag = 0;
-	all->start_time = 0;
+	all->base_time = 0;
 	if (argc == 6)
 		all->must_eat_number = check_number(argv[5]);
 	else

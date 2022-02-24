@@ -6,7 +6,7 @@
 /*   By: noguen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 15:55:25 by noguen            #+#    #+#             */
-/*   Updated: 2022/02/21 15:03:12 by noguen           ###   ########.fr       */
+/*   Updated: 2022/02/24 14:38:32 by noguen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ typedef struct	s_all
 	int				must_eat_number;
 	int				death_flag;
 	int				eat_flag;
-	long long		start_time;
+	long long		base_time;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t eating;
-	pthread_mutex_t	writing;
+	pthread_mutex_t	printing;
 	t_philo			*philos;
 }				t_all;
 
@@ -51,7 +51,7 @@ size_t	utils_strlen(const char *s);
 int		utils_atoi(const char *s);
 int		utils_isdigit(int c);
 int		utils_isnum(char *str);
-void	utils_putnbr(int num);
+void	utils_putnbr(long long num);
 
 /********about init********/
 void	init_mutex(t_all *all);
@@ -60,16 +60,30 @@ void	init_all(t_all *all, int argc, char *argv[]);
 
 /********about error********/
 void	error_exit(int code);
+void	error_exit1(int code);
 
 /********about check********/
 int		check_number(char *str);
 void	check_init(t_all *all);
+void	check_must_eat(t_all *all, t_philo *philo);
+void	check_death(t_all *all, t_philo *philo);
 
 /********about time********/
-long long	time_get();
+long long	time_current();
+void		time_eating(t_all *all);
+void		time_sleeping(t_all *all);
 
-/********about ********/
+/********about thread********/
+void		thread_end(t_all *all);
+void		*thread_func(void *void_philo);
+void		thread_start(t_all *all);
 
-/********about ********/
+/********about print********/
+void		print_error(char *str);
+void		print_log(t_all *all, char *str, int id);
+
+/********about philo_act********/
+void		philo_act_eat(t_all *all, t_philo *philo);
+void		philo_act(t_all *all, t_philo *philo);
 
 #endif
