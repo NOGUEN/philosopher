@@ -6,7 +6,7 @@
 /*   By: noguen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 14:58:56 by noguen            #+#    #+#             */
-/*   Updated: 2022/02/24 15:37:33 by noguen           ###   ########.fr       */
+/*   Updated: 2022/02/25 13:45:15 by noguen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,12 @@ void	thread_start(t_all *all)
 
 	i = -1;
 	all->base_time = time_current();
-	while(++i < all->philo_number)
+	while (++i < all->philo_number)
 	{
 		all->philos[i].time = time_current();
 		void_philo = (void *)&(all->philos[i]);
-		if (pthread_create(&(all->philos[i].t_id), NULL, thread_func, void_philo))
+		if (pthread_create(&(all->philos[i].t_id),
+				NULL, thread_func, void_philo))
 			error_exit(-6);
 	}
 	check_death(all, all->philos);

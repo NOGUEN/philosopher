@@ -6,13 +6,13 @@
 /*   By: noguen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 20:16:10 by noguen            #+#    #+#             */
-/*   Updated: 2022/02/24 19:23:11 by noguen           ###   ########.fr       */
+/*   Updated: 2022/02/25 13:48:32 by noguen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philosophers.h"
 
-long long	time_current()
+long long	time_current(void)
 {
 	struct timeval	t;
 	long long		ms;

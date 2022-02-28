@@ -6,7 +6,7 @@
 /*   By: noguen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:07:19 by noguen            #+#    #+#             */
-/*   Updated: 2022/02/24 14:08:20 by noguen           ###   ########.fr       */
+/*   Updated: 2022/02/25 13:46:02 by noguen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	init_mutex(t_all *all)
 {
-	int idx;
+	int	idx;
 
 	all->forks = malloc(sizeof(pthread_mutex_t) * all->philo_number);
 	if (!(all->forks))
