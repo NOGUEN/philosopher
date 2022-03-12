@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: noguen <marvin@42.fr>                      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/17 17:07:19 by noguen            #+#    #+#             */
-/*   Updated: 2022/02/25 13:46:02 by noguen           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../include/philosophers.h"
 
 void	init_mutex(t_all *all)
@@ -23,8 +11,6 @@ void	init_mutex(t_all *all)
 	while (++idx < all->philo_number)
 		if (pthread_mutex_init(&(all->forks[idx]), NULL))
 			error_exit(-4);
-	if (pthread_mutex_init(&(all->eating), NULL))
-		error_exit(-3);
 	if (pthread_mutex_init(&(all->printing), NULL))
 		error_exit(-3);
 }

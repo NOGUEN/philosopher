@@ -1,34 +1,39 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   philo_act.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: noguen <marvin@42.fr>                      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/21 18:48:17 by noguen            #+#    #+#             */
-/*   Updated: 2022/02/24 15:03:04 by noguen           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../include/philosophers.h"
 
-void	philo_act_eat(t_all *all, t_philo *philo)
+void	philo_act_eat(t_philo *philo)
 {
-	pthread_mutex_lock(&(all->eating));
-	print_log(all, "is eating", philo->id);
+	pthread_mutex_lock(&philo->all->forks[philo->left_fork_idx]);
+	print_log(philo, "has taken a fork", philo->id);
+	pthread_mutex_lock(&philo->all->forks[philo->right_fork_idx]);
+	print_log(philo, "has taken a fork", philo->id);
+	pthread_mutex_lock(&(philo->protect));
+	print_log(philo, "is eating", philo->id);
 	philo->time = time_current();
-	pthread_mutex_unlock(&(all->eating));
+	pthread_mutex_unlock(&(philo->protect));
+	while (time_current() - philo->time <= philo->all->time_to_eat &&
+		!philo->all->must_eat_number)
+		usleep(1000);
 	philo->eat_cnt++;
-	time_eating(all);
+	pthread_mutex_unlock(&philo->all->forks[philo->left_fork_idx]);
+	pthread_mutex_unlock(&philo->all->forks[philo->right_fork_idx]);
 }
 
-void	philo_act(t_all *all, t_philo *philo)
+void	philo_act_sleep(t_philo *philo)
 {
-	pthread_mutex_lock(&(all->forks[philo->left_fork_idx]));
-	print_log(all, "has taken a fork", philo->id);
-	pthread_mutex_lock(&(all->forks[philo->right_fork_idx]));
-	print_log(all, "has taken a fork", philo->id);
-	philo_act_eat(all, philo);
-	pthread_mutex_unlock(&(all->forks[philo->left_fork_idx]));
-	pthread_mutex_unlock(&(all->forks[philo->right_fork_idx]));
+	int	start_time;
+
+	start_time = time_current();
+	print_log(philo->all, "is sleeping", philo->id);
+	while (time_current() - start_time <= philo->all->time_to_sleep &&
+	!philo->all->death_flag)
+	{
+		if (philo->all->death_flag)
+			break ;
+		usleep(1000);
+	}
+}
+
+void	philo_act_think(t_philo *philo)
+{
+	print_log(philo->all, "is thinking", philo->id);
 }

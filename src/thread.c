@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   thread.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: noguen <marvin@42.fr>                      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/21 14:58:56 by noguen            #+#    #+#             */
-/*   Updated: 2022/02/25 13:45:15 by noguen           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../include/philosophers.h"
 
 void	thread_end(t_all *all)
@@ -18,33 +6,70 @@ void	thread_end(t_all *all)
 
 	i = -1;
 	while (++i < all->philo_number)
-		pthread_join(all->philos[i].t_id, NULL);
+	{
+		if (pthread_join(all->philos[i].t_id, NULL))
+			error_exit(-7);
+		if (pthread_join(all->philos[i].m_id, NULL))
+			error_exit(-7);
+
+	}
 	i = -1;
 	while (++i < all->philo_number)
+	{
 		pthread_mutex_destroy(&(all->forks[i]));
+		pthread_mutex_destroy(&(all->philos[i].protect));
+	}
 	pthread_mutex_destroy(&(all->printing));
-	pthread_mutex_destroy(&(all->eating));
 	free(all->philos);
 	free(all->forks);
 }
 
 void	*thread_func(void *void_philo)
 {
-	t_all	*tmp_all;
-	t_philo	*tmp_philo;
+	t_philo	*philo;
+	t_all	*all;
 
-	tmp_philo = (t_philo *)void_philo;
-	tmp_all = tmp_philo->all;
-	if (tmp_philo->id % 2 == 1)
-		usleep(10000);
-	while (!tmp_all->death_flag)
+	philo = (t_philo *)void_philo;
+	all = philo->all;
+	if (philo->id % 2 == 1)
+		usleep(1000 * all->time_to_eat);
+	while (!all->death_flag)
 	{
-		philo_act(tmp_all, tmp_philo);
-		if (tmp_all->eat_flag)
+		philo_act_eat(philo);
+		check_must_eat(philo->all);
+		if (all->eat_flag)
 			break ;
-		print_log(tmp_all, "is sleeping", tmp_philo->id);
-		time_sleeping(tmp_all);
-		print_log(tmp_all, "is thinking", tmp_philo->id);
+		if (all->death_flag)
+			break ;
+		philo_act_sleep(philo);
+		if (philo->all->death_flag)
+			break ;
+		philo_act_think(philo);
+		if (philo->all->death_flag)
+			break ;
+	}
+	return (0);
+}
+
+void	*thread_check_func(void *void_philo)
+{
+	t_philo *philo;
+	t_all	*all;
+
+	philo = void_philo;
+	all = philo->all;
+	while (!all->death_flag)
+	{
+		pthread_mutex_lock(&(philo->protect));
+		if (time_current() - philo->time >= all->time_to_die)
+		{
+			print_log(all, "died", philo->id);
+			all->death_flag = 1;
+			pthread_mutex_unlock(&(philo->protect));
+			break ;
+		}
+		pthread_mutex_unlock(&(philo->protect));
+		usleep(50);
 	}
 	return (0);
 }
@@ -52,18 +77,18 @@ void	*thread_func(void *void_philo)
 void	thread_start(t_all *all)
 {
 	int		i;
-	void	*void_philo;
 
 	i = -1;
 	all->base_time = time_current();
 	while (++i < all->philo_number)
 	{
 		all->philos[i].time = time_current();
-		void_philo = (void *)&(all->philos[i]);
 		if (pthread_create(&(all->philos[i].t_id),
-				NULL, thread_func, void_philo))
+				NULL, thread_func, &all->philos[i]))
+			error_exit(-6);
+		if (pthread_create(&(all->philos[i].m_id),
+				NULL, thread_check_func, &all->philos[i]));
 			error_exit(-6);
 	}
-	check_death(all, all->philos);
 	thread_end(all);
 }
