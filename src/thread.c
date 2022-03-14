@@ -31,7 +31,7 @@ void	*thread_func(void *void_philo)
 
 	philo = (t_philo *)void_philo;
 	all = philo->all;
-	if (philo->id % 2 == 1)
+	if (philo->id % 2 == 0)
 		usleep(1000 * all->time_to_eat);
 	while (!all->death_flag)
 	{
@@ -42,10 +42,10 @@ void	*thread_func(void *void_philo)
 		if (all->death_flag)
 			break ;
 		philo_act_sleep(philo);
-		if (philo->all->death_flag)
+		if (all->death_flag)
 			break ;
 		philo_act_think(philo);
-		if (philo->all->death_flag)
+		if (all->death_flag)
 			break ;
 	}
 	return (0);
@@ -69,7 +69,7 @@ void	*thread_check_func(void *void_philo)
 			break ;
 		}
 		pthread_mutex_unlock(&(philo->protect));
-		usleep(50);
+		usleep(100);
 	}
 	return (0);
 }
@@ -87,7 +87,7 @@ void	thread_start(t_all *all)
 				NULL, thread_func, &all->philos[i]))
 			error_exit(-6);
 		if (pthread_create(&(all->philos[i].m_id),
-				NULL, thread_check_func, &all->philos[i]));
+				NULL, thread_check_func, &all->philos[i]))
 			error_exit(-6);
 	}
 	thread_end(all);

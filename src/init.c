@@ -10,9 +10,13 @@ void	init_mutex(t_all *all)
 	idx = -1;
 	while (++idx < all->philo_number)
 		if (pthread_mutex_init(&(all->forks[idx]), NULL))
-			error_exit(-4);
+			error_exit(-3);
 	if (pthread_mutex_init(&(all->printing), NULL))
 		error_exit(-3);
+	idx = -1;
+	while (++idx < all->philo_number)
+		if (pthread_mutex_init(&(all->philos[idx].protect), NULL))
+			error_exit(-4);
 }
 
 void	init_philosophers(t_all *all)
@@ -47,6 +51,6 @@ void	init_all(t_all *all, int argc, char *argv[])
 		all->must_eat_number = check_number(argv[5]);
 	else
 		all->must_eat_number = 0;
-	init_mutex(all);
 	init_philosophers(all);
+	init_mutex(all);
 }
