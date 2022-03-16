@@ -18,4 +18,5 @@ void	error_exit(int code)
 		print_error("pthread_create error.");
 	else if (code == -7)
 		print_error("pthread_join error.");
+	exit(0);
 }

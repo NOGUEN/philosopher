@@ -8,5 +8,6 @@ int	main(int argc, char *argv[])
 		error_exit(0);
 	init_all(&all, argc, argv);
 	check_init(&all);
+	printf("sleep time %d\n", all.time_to_sleep);
 	thread_start(&all);
 }

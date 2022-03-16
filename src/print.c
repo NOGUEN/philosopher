@@ -2,28 +2,24 @@
 
 void	print_error(char *str)
 {
-	write(1, "\033[31m", utils_strlen("\033[31m"));
-	write(1, str, utils_strlen(str));
-	write(1, "\n\033[0m", utils_strlen("\n\033[0m"));
+	printf("\033[31m%s\n\033[0m", str);
 }
 
-void	print_log(t_all *all, char *str, int id)
+void	print_log(t_philo *philo, char *str)
 {
 	long long	time;
 
-	pthread_mutex_lock(&(all->printing));
-	time = time_current() - all->base_time;
-	if (!all->death_flag)
+	pthread_mutex_lock(&(philo->all->printing));
+	if (philo->all->death_flag)
 	{
-		write(1, "\033[", utils_strlen("\033["));
-		utils_putnbr(32 + (id + 1) % 5);
-		write(1, "m", 1);
-		utils_putnbr(time);
-		write(1, " ", 1);
-		utils_putnbr(id + 1);
-		write(1, " ", 1);
-		write(1, str, utils_strlen(str));
-		write(1, "\n\033[0m", utils_strlen("\n\033[0m"));
+		pthread_mutex_unlock(&(philo->all->printing));
+		return ;
 	}
-	pthread_mutex_unlock(&(all->printing));
+	printf("\033[%dm", 31 + philo->id % 5);
+	time = time_current() - philo->all->base_time;
+	printf("%lld\t", time);
+	printf("%d ", philo->id + 1);
+	printf("%s", str);
+	printf("\n\033[0m");
+	pthread_mutex_unlock(&(philo->all->printing));
 }

@@ -29,12 +29,9 @@ void	check_must_eat(t_all *all)
 	{
 		while (++i < all->philo_number)
 		{
-			if (all->philos[i].eat_cnt >= all->must_eat_number)
-				i++;
-			else
-				break ;
+			if (all->philos[i].eat_cnt < all->must_eat_number)
+				return ;
 		}
-		if (i == all->philo_number)
-			all->eat_flag = 1;
+		all->eat_flag = 1;
 	}
 }

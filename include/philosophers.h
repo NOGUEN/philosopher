@@ -68,7 +68,7 @@ void		thread_start(t_all *all);
 
 /********about print********/
 void		print_error(char *str);
-void		print_log(t_all *all, char *str, int id);
+void		print_log(t_philo *philo, char *str);
 
 /********about philo_act********/
 void		philo_act_eat(t_philo *philo);

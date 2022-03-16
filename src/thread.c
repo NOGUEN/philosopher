@@ -11,7 +11,6 @@ void	thread_end(t_all *all)
 			error_exit(-7);
 		if (pthread_join(all->philos[i].m_id, NULL))
 			error_exit(-7);
-
 	}
 	i = -1;
 	while (++i < all->philo_number)
@@ -32,7 +31,7 @@ void	*thread_func(void *void_philo)
 	philo = (t_philo *)void_philo;
 	all = philo->all;
 	if (philo->id % 2 == 0)
-		usleep(1000 * all->time_to_eat);
+		usleep(all->time_to_eat);
 	while (!all->death_flag)
 	{
 		philo_act_eat(philo);
@@ -63,7 +62,7 @@ void	*thread_check_func(void *void_philo)
 		pthread_mutex_lock(&(philo->protect));
 		if (time_current() - philo->time >= all->time_to_die)
 		{
-			print_log(all, "died", philo->id);
+			print_log(philo, "died");
 			all->death_flag = 1;
 			pthread_mutex_unlock(&(philo->protect));
 			break ;
