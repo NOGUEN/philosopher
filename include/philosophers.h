@@ -28,7 +28,7 @@ typedef struct s_all
 	int				time_to_sleep;
 	int				must_eat_number;
 	int				stop_flag;
-	long long		base_time;
+	int				base_time;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	printing;
 	t_philo			*philos;
