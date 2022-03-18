@@ -23,7 +23,7 @@ void	philo_act_eat(t_philo *philo)
 
 void	philo_act_sleep(t_philo *philo)
 {
-	long long	start_time;
+	int	start_time;
 
 	start_time = time_current();
 	print_log(philo, "is sleeping");

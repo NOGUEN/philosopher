@@ -13,7 +13,7 @@ typedef struct s_philo
 	int				left_fork_idx;
 	int				right_fork_idx;
 	int				eat_cnt;
-	long long		time;
+	int				time;
 	struct s_all	*all;
 	pthread_mutex_t protect;
 	pthread_t		t_id;
@@ -56,9 +56,7 @@ int			check_must_eat(t_all *all);
 void		check_death(t_all *all, t_philo *philo);
 
 /********about time********/
-long long	time_current(void);
-void		time_eating(t_all *all);
-void		time_sleeping(t_all *all);
+int			time_current(void);
 
 /********about thread********/
 void		thread_end(t_all *all);
