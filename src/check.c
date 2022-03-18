@@ -35,4 +35,5 @@ int	check_must_eat(t_all *all)
 		all->stop_flag = 1;
 		return (1);
 	}
+	return (0);
 }

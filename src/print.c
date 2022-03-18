@@ -10,7 +10,7 @@ void	print_log(t_philo *philo, char *str)
 	long long	time;
 
 	pthread_mutex_lock(&(philo->all->printing));
-	if (philo->all->death_flag)
+	if (philo->all->stop_flag)
 	{
 		pthread_mutex_unlock(&(philo->all->printing));
 		return ;
