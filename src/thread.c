@@ -31,7 +31,7 @@ void	*thread_func(void *void_philo)
 	philo = (t_philo *)void_philo;
 	all = philo->all;
 	if (philo->id % 2 == 0)
-		usleep(all->time_to_eat);
+		usleep(1000 * all->time_to_eat);
 	while (!all->stop_flag)
 	{
 		philo_act_eat(philo);
