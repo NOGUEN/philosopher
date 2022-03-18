@@ -16,9 +16,7 @@ void	philo_act_eat(t_philo *philo)
 	}
 	philo->eat_cnt++;
 	pthread_mutex_unlock(&philo->all->forks[philo->right_fork_idx]);
-	print_log(philo, "put down the fork");
 	pthread_mutex_unlock(&philo->all->forks[philo->left_fork_idx]);
-	print_log(philo, "put down the fork");
 }
 
 void	philo_act_sleep(t_philo *philo)
