@@ -27,8 +27,7 @@ typedef struct s_all
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				must_eat_number;
-	int				death_flag;
-	int				eat_flag;
+	int				stop_flag;
 	long long		base_time;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	printing;
@@ -53,7 +52,7 @@ void		error_exit(int code);
 /********about check********/
 int			check_number(char *str);
 void		check_init(t_all *all);
-void		check_must_eat(t_all *all);
+int			check_must_eat(t_all *all);
 void		check_death(t_all *all, t_philo *philo);
 
 /********about time********/

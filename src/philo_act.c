@@ -27,7 +27,8 @@ void	philo_act_sleep(t_philo *philo)
 
 	start_time = time_current();
 	print_log(philo, "is sleeping");
-	while (time_current() - start_time <= philo->all->time_to_sleep)
+	while (time_current() - start_time <= philo->all->time_to_sleep &&
+		!philo->all->stop_flag)
 		usleep(1000);
 }
 

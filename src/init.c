@@ -44,8 +44,7 @@ void	init_all(t_all *all, int argc, char *argv[])
 	all->time_to_die = check_number(argv[2]);
 	all->time_to_eat = check_number(argv[3]);
 	all->time_to_sleep = check_number(argv[4]);
-	all->death_flag = 0;
-	all->eat_flag = 0;
+	all->stop_flag = 0;
 	all->base_time = 0;
 	if (argc == 6)
 		all->must_eat_number = check_number(argv[5]);

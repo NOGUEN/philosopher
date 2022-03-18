@@ -20,7 +20,7 @@ void	check_init(t_all *all)
 		error_exit(-5);
 }
 
-void	check_must_eat(t_all *all)
+int	check_must_eat(t_all *all)
 {
 	int	i;
 
@@ -30,8 +30,9 @@ void	check_must_eat(t_all *all)
 		while (++i < all->philo_number)
 		{
 			if (all->philos[i].eat_cnt < all->must_eat_number)
-				return ;
+				return (0);
 		}
-		all->eat_flag = 1;
+		all->stop_flag = 1;
+		return (1);
 	}
 }

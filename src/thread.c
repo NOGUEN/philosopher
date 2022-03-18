@@ -32,19 +32,18 @@ void	*thread_func(void *void_philo)
 	all = philo->all;
 	if (philo->id % 2 == 0)
 		usleep(all->time_to_eat);
-	while (!all->death_flag)
+	while (!all->stop_flag)
 	{
 		philo_act_eat(philo);
-		check_must_eat(philo->all);
-		if (all->eat_flag)
+		if (check_must_eat(philo->all))
 			break ;
-		if (all->death_flag)
+		if (all->stop_flag)
 			break ;
 		philo_act_sleep(philo);
-		if (all->death_flag)
+		if (all->stop_flag)
 			break ;
 		philo_act_think(philo);
-		if (all->death_flag)
+		if (all->stop_flag)
 			break ;
 	}
 	return (0);
@@ -57,13 +56,13 @@ void	*thread_check_func(void *void_philo)
 
 	philo = void_philo;
 	all = philo->all;
-	while (!all->death_flag)
+	while (!all->stop_flag)
 	{
 		pthread_mutex_lock(&(philo->protect));
 		if (time_current() - philo->time >= all->time_to_die)
 		{
 			print_log(philo, "died");
-			all->death_flag = 1;
+			all->stop_flag = 1;
 			pthread_mutex_unlock(&(philo->protect));
 			break ;
 		}
